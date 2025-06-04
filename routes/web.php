@@ -131,7 +131,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     // Route::get('/getdata/cuti/list',                [CutiController::class, 'daftarCutigetData'])->name('cutis.daftarCutidetData');
     // Route::get('/getdata/perkara',                  [PtspController::class, 'getPerkaraData'])->name('perkara.data');
     // Route::get('pemohon-informasi-data',            [PtspController::class, 'getPemohonInformasiData'])->name('pemohon.informasi.data');
-    // Route::get('pemohon-produk-data',               [PtspController::class, 'getPemohonUbahDataData'])->name('pemohon.ubahStatus.data');
+    Route::get('pemohon-produk-data',               [PtspController::class, 'getPemohonUbahDataData'])->name('pemohon.ubahStatus.data');
     // Route::get('/getdata/kritir',                   [PtspController::class, 'kritirData'])->name('kritis.data');
     // Route::get('/pemohon/{id}/info',                [PtspController::class, 'getPemohonInfo'])->name('pemohon.info');    
     // Route::get('/perkara/{id}',                     [PtspController::class, 'getPerkaraNameById']);
@@ -142,7 +142,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     
 
 
-    // Route::post('/cancel/siramasakan',              [PtspController::class, 'batalkanPengajuan'])->name('batal.siramasakan');
+    Route::post('/cancel/siramasakan',              [PtspController::class, 'batalkanPengajuan'])->name('batal.siramasakan');
     // Route::post('/pemohon/edit',                    [PtspController::class, 'pemohonEdit'])->name('pemohon.edit');
     
     // Route::post('/wasbid/store',                    [WasbidController::class, 'storeWasbid'])->name('wasbid.store');
