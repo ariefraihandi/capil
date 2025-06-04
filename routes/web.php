@@ -18,13 +18,13 @@ Route::get('/auth',                                 [AuthController::class, 'sho
 // Route::get('/register',                             [AuthController::class, 'showRegisterForm'])->name('register.view')->middleware(RedirectIfAuthenticated::class);
 // Route::get('/register',                             [AuthController::class, 'showRegisterForm'])->name('register.view')->middleware(RedirectIfAuthenticated::class);
 
-Route::get('/register',                             [AuthController::class, 'showRegisterForm'])->name('register.view')->middleware(RedirectIfAuthenticated::class);
-Route::post('/register/submit',                     [AuthController::class, 'submitRegister'])->name('register.submit');
+// Route::get('/register',                             [AuthController::class, 'showRegisterForm'])->name('register.view')->middleware(RedirectIfAuthenticated::class);
+// Route::post('/register/submit',                     [AuthController::class, 'submitRegister'])->name('register.submit');
 Route::get('/logout',                               [AuthController::class, 'logout'])->name('logout');
 Route::post('/login',                               [AuthController::class, 'login'])->name('submitLogin');
 
 
-// Route::middleware([AuthMiddleware::class, SidebarMiddleware::class])->group(function () {
+Route::middleware([AuthMiddleware::class, SidebarMiddleware::class])->group(function () {
    
     Route::get('/admin/permohonan',                 [SiramasakanController::class, 'index'])->name('admin.permohonan');
    
@@ -35,7 +35,7 @@ Route::post('/login',                               [AuthController::class, 'log
     Route::get('/admin/menu/submenulist',           [AdminController::class, 'showsubMenu'])->name('admin.menu.submenulist');
     Route::get('/admin/menu/childmenulist',         [AdminController::class, 'showchildMenu'])->name('admin.menu.childmenulist');
     Route::get('/admin/menu/role',                  [AdminController::class, 'showRoleList'])->name('admin.menu.role');    
-// });
+});
         
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::post('/permohonan/download',             [PtspController::class, 'permohonanStore'])->name('pemohon.download'); 

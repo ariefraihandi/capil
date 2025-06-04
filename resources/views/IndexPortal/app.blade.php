@@ -14,9 +14,9 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            {{-- @include('IndexPortal.sidebar') --}}
+            @include('IndexPortal.sidebar')
             <div class="layout-page">
-                {{-- @include('IndexPortal.navbar') --}}
+                @include('IndexPortal.navbar')
                 <div class="content-wrapper">
                     @yield('content')
                     @include('IndexPortal.footer')
