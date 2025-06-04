@@ -20,9 +20,9 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="faq-header d-flex flex-column justify-content-center align-items-center">
-            <h1  class="text-center" style="color: white;">Sistem Integrasi <br>PA Muara Enim & Sistem Kependudukan</h1>
+            <h1  class="text-center" style="color: white;">Hidupku Mapan </h1>
         
-            {{-- <p class="text-center mb-0 px-3" style="color: white;">Sistem Integrasi Mahkamah Syar'iyah Dengan Data Kependudukan</p> --}}
+            <p class="text-center mb-0 px-3" style="color: white;">Hasil Integrasi Data Kependudukan Untuk Masyarakat Pasca Penetapan/Putusan</p>
             
         </div>
 
@@ -151,21 +151,24 @@
                                                                     Tidak ada perubahan
                                                                 @endif
                                                             </td>
+                                                            <td>
+                                                                <!-- Button for Receipt Download -->
+                                                                <a href="{{ url('cetak/receipt/ubahstatus', ['data' => $status->id]) }}" class="btn btn-sm btn-primary" target="_blank">Download Receipt</a>
+                                                                <br> <!-- Line break between the two buttons -->
+                                                                <br> <!-- Line break between the two buttons -->
+                                                                <!-- Button for Document Download -->
+                                                                <a href="{{ url($status->url_document) }}" class="btn btn-sm btn-info" target="_blank">Download Document</a>
+                                                            </td>
                                                             
                                                             <td>
-                                                                <a href="{{ url('cetak/receipt/ubahstatus', ['data' => $status->id]) }}" class="btn btn-sm btn-primary" target="_blank">Download</a>
-                                                            </td>                                                            
-                                                            <td>
-                                                                <a href="{{ url($status->url_document) }}" class="btn btn-sm btn-info" target="_blank">Download</a>
-                                                            </td> 
-                                                            <td>
+                                                                <!-- WhatsApp Button (existing code) -->
                                                                 @if ($status->cheklist_ubah_status && $status->cheklist_ubah_alamat)
                                                                     <a href="https://wa.me/6282276624504?text=Perubahan%20Status%20dan%20Alamat%20atas%20nama%20{{ urlencode($status->pemohon->nama) }}" class="btn btn-sm btn-success" target="_blank">
-                                                                        <i class="bx bxl-whatsapp"></i> Notify
+                                                                        <i class="bx bxl-whatsapp"></i> 
                                                                     </a>
                                                                 @elseif ($status->cheklist_ubah_status)
                                                                     <a href="https://wa.me/6282276624504?text=Perubahan%20Status%20atas%20nama%20{{ urlencode($status->pemohon->nama) }}" class="btn btn-sm btn-success" target="_blank">
-                                                                        <i class="bx bxl-whatsapp"></i> Notify
+                                                                        <i class="bx bxl-whatsapp"></i> 
                                                                     </a>
                                                                 @elseif ($status->cheklist_ubah_alamat)
                                                                     <a href="https://wa.me/6282276624504?text=Perubahan%20Alamat%20atas%20nama%20{{ urlencode($status->pemohon->nama) }}" class="btn btn-sm btn-success" target="_blank">
@@ -174,31 +177,16 @@
                                                                 @else
                                                                     Tidak ada perubahan
                                                                 @endif
-                                                            </td>
-                                                            <td>
-                                                                @if ($status->cheklist_ubah_status && $status->cheklist_ubah_alamat)
-                                                                    Perubahan Status dan Alamat atas nama {{ $status->pemohon->nama }}
-                                                                @elseif ($status->cheklist_ubah_status)
-                                                                    Perubahan Status atas nama {{ $status->pemohon->nama }}
-                                                                @elseif ($status->cheklist_ubah_alamat)
-                                                                    Perubahan Alamat atas nama {{ $status->pemohon->nama }}
-                                                                @else
-                                                                    Tidak ada perubahan
-                                                                @endif
+                                                            
+                                                                <a href="{{ route('delete.permohonan', ['id' => $status->id]) }}" 
+                                                                    class="btn btn-sm btn-danger" 
+                                                                    id="deleteBtn">
+                                                                    <i class="bx bx-trash"></i>
+                                                                 </a>
+                                                                                                                                                                                              
                                                             </td>
                                                             
-                                                            <td>
-                                                                @if ($status->cheklist_ubah_status && $status->cheklist_ubah_alamat)
-                                                                    Perubahan Status dan Alamat atas nama {{ $status->pemohon->nama }}
-                                                                @elseif ($status->cheklist_ubah_status)
-                                                                    Perubahan Status atas nama {{ $status->pemohon->nama }}
-                                                                @elseif ($status->cheklist_ubah_alamat)
-                                                                    Perubahan Alamat atas nama {{ $status->pemohon->nama }}
-                                                                @else
-                                                                    Tidak ada perubahan
-                                                                @endif
-                                                            </td>
-                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                         
                                                             <td>
                                                                 @if ($status->status == 1)
                                                                     <span class="badge bg-primary" data-bs-toggle="modal" data-bs-target="#modalStatus{{ $status->id }}">Sedang Diproses</span>
@@ -616,8 +604,28 @@
 
 @push('footer-Sec-script')
 <script>
-    function openUploadModal(pemohonId) {
-        $('#pemohon_id').val(pemohonId); // Set the pemohon ID in the hidden field
+    document.getElementById('deleteBtn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default action (follow the link)
+
+        // Show SweetAlert confirmation
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Permohonan ini akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, redirect to the route
+                window.location.href = this.href;
+            }
+        });
+    });
+</script>
+
+<script>
+    function openUploadModal(pemohonId) {        
         $('#uploadDocumentModal').modal('show'); // Show the modal
     }
 

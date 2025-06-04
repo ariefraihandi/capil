@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
             ];
 
             // Redirect authenticated users with the response
-            return redirect()->route('aplikasi.siramasakan')->with('response', $response);
+            return redirect()->route('admin.permohonan')->with('response', $response);
         }
 
         return $next($request);

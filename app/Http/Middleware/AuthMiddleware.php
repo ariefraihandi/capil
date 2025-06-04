@@ -39,7 +39,7 @@ class AuthMiddleware
             
             // Jika pengguna mengakses /login, arahkan ke profil akun
             if ($request->is('login')) {
-                return redirect()->route('aplikasi.siramasakan');
+                return redirect()->route('admin.permohonan');
             }
             
             // Lanjutkan ke rute yang diminta

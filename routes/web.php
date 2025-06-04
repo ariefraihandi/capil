@@ -27,48 +27,46 @@ Route::post('/login',                               [AuthController::class, 'log
 Route::middleware([AuthMiddleware::class, SidebarMiddleware::class])->group(function () {
    
     Route::get('/admin/permohonan',                 [SiramasakanController::class, 'index'])->name('admin.permohonan');
-    Route::get('/aplikasi/ptsp/informasi',          [PtspController::class, 'showInformasi'])->name('aplikasi.ptsp.informasi');
-    Route::get('/aplikasi/ptsp/produk',             [PtspController::class, 'showProduk'])->name('aplikasi.ptsp.produk');
-    Route::get('/aplikasi/kritis',                  [PtspController::class, 'showKritis'])->name('aplikasi.kritis');
-    Route::get('/aplikasi/wasbid/temuan',           [WasbidController::class, 'showWasbid'])->name('aplikasi.wasbid.temuan');  
+   
 
     Route::get('/admin/user/access',                [AdminController::class, 'showRole'])->name('admin.user.access');
     Route::get('/admin/user/list',                  [AdminController::class, 'showUserList'])->name('admin.user.list');
     Route::get('/admin/menu/menulist',              [AdminController::class, 'showMenu'])->name('admin.menu.menulist');
     Route::get('/admin/menu/submenulist',           [AdminController::class, 'showsubMenu'])->name('admin.menu.submenulist');
     Route::get('/admin/menu/childmenulist',         [AdminController::class, 'showchildMenu'])->name('admin.menu.childmenulist');
-    Route::get('/admin/menu/role',                  [AdminController::class, 'showRoleList'])->name('admin.menu.role');
-    Route::get('/admin/instansi',                   [AdminController::class, 'showInstasi'])->name('admin.instansi'); 
+    Route::get('/admin/menu/role',                  [AdminController::class, 'showRoleList'])->name('admin.menu.role');    
 });
         
 Route::middleware([AuthMiddleware::class])->group(function () {
-    Route::get('/syarat',                           [PtspController::class, 'show'])->name('syarat.show');
-    Route::get('/ptsp/syarat',                      [PtspController::class, 'tambahSyarat'])->name('tambah.syarat');
-    Route::get('/delete/perkara',                   [PtspController::class, 'deletePerkara'])->name('perkara.delete');
-    Route::get('/syaratPerkara/{id}/move-up',       [PtspController::class, 'moveUp'])->name('syaratPerkara.moveUp');
-    Route::get('/syaratPerkara/{id}/move-down',     [PtspController::class, 'moveDown'])->name('syaratPerkara.moveDown');
-    Route::post('/syarat-perkara/update',           [PtspController::class, 'updateSyarat'])->name('syarat.update');
-    Route::get('/syarat/delete',                    [PtspController::class, 'destroySyarat'])->name('syarat.destroy');
+    Route::post('/permohonan/download',             [PtspController::class, 'permohonanStore'])->name('pemohon.download'); 
+    Route::get('/permohonan/delete',                [PtspController::class, 'permohonanDelete'])->name('delete.permohonan');
+   
+    // Route::get('/syarat',                           [PtspController::class, 'show'])->name('syarat.show');
+    // Route::get('/ptsp/syarat',                      [PtspController::class, 'tambahSyarat'])->name('tambah.syarat');
+    // Route::get('/delete/perkara',                   [PtspController::class, 'deletePerkara'])->name('perkara.delete');
+    // Route::get('/syaratPerkara/{id}/move-up',       [PtspController::class, 'moveUp'])->name('syaratPerkara.moveUp');
+    // Route::get('/syaratPerkara/{id}/move-down',     [PtspController::class, 'moveDown'])->name('syaratPerkara.moveDown');
+    // Route::post('/syarat-perkara/update',           [PtspController::class, 'updateSyarat'])->name('syarat.update');
+    // Route::get('/syarat/delete',                    [PtspController::class, 'destroySyarat'])->name('syarat.destroy');
 
-    Route::post('/perkara/store',                   [PtspController::class, 'perkaraStore'])->name('perkara.store');   
-    Route::post('/perkara/update/{id}',             [PtspController::class, 'updatePerkara']);
-    Route::post('/syarat/store',                    [PtspController::class, 'storeSyarat'])->name('syarat.store');
+    // Route::post('/perkara/store',                   [PtspController::class, 'perkaraStore'])->name('perkara.store');   
+    // Route::post('/perkara/update/{id}',             [PtspController::class, 'updatePerkara']);
+    // Route::post('/syarat/store',                    [PtspController::class, 'storeSyarat'])->name('syarat.store');
     
-    Route::post('/permohonan/download',             [PtspController::class, 'permohonanStore'])->name('pemohon.download');    //be
-    Route::get('/cetak/pemohoninformasi/{id}',      [PtspController::class, 'cetakPermohonanInformasi'])->name('cetak.permohonan');    
-    Route::get('/delete/pemohoninformasi',          [PtspController::class, 'deletePemohon'])->name('pemohon.delete');    
+    // Route::get('/cetak/pemohoninformasi/{id}',      [PtspController::class, 'cetakPermohonanInformasi'])->name('cetak.permohonan');    
+    // Route::get('/delete/pemohoninformasi',          [PtspController::class, 'deletePemohon'])->name('pemohon.delete');    
+    // Route::get('/delete/feedback',                  [PtspController::class, 'deleteFeedback'])->name('feedback.delete');
+    
+    
     Route::post('/pemohon/upload/document',         [PtspController::class, 'uploadDocument'])->name('pemohon.store');
-    Route::get('/delete/feedback',                  [PtspController::class, 'deleteFeedback'])->name('feedback.delete');
-    
-
     Route::get('cetak/receipt/ubahstatus/{id}',     [SiramasakanController::class, 'cetakUbahStatus'])->name('receipt.ubahstatus');
     Route::post('/update-status',                   [SiramasakanController::class, 'updateStatus'])->name('update.status.capil');   
 
-    Route::get('/kepegawaian/cuti/atasan',          [CutiController::class, 'showCutiDetailAtasanLangsung'])->name('kepegawaian.cuti.atasan');
-    Route::get('/kepegawaian/cuti/pejabat',         [CutiController::class, 'showCutiDetailpejabat'])->name('kepegawaian.cuti.pejabat');
-    Route::get('/kepegawaian/cuti/penomoran',       [CutiController::class, 'showCutiDetailPenomoran'])->name('kepegawaian.cuti.penomoran');
-    Route::get('/cuti/delete',                      [CutiController::class, 'destroy'])->name('cuti.delete');
-    Route::get('/cuti/delete',                      [CutiController::class, 'destroy'])->name('submit-cutiSakit');
+    // Route::get('/kepegawaian/cuti/atasan',          [CutiController::class, 'showCutiDetailAtasanLangsung'])->name('kepegawaian.cuti.atasan');
+    // Route::get('/kepegawaian/cuti/pejabat',         [CutiController::class, 'showCutiDetailpejabat'])->name('kepegawaian.cuti.pejabat');
+    // Route::get('/kepegawaian/cuti/penomoran',       [CutiController::class, 'showCutiDetailPenomoran'])->name('kepegawaian.cuti.penomoran');
+    // Route::get('/cuti/delete',                      [CutiController::class, 'destroy'])->name('cuti.delete');
+    // Route::get('/cuti/delete',                      [CutiController::class, 'destroy'])->name('submit-cutiSakit');
 
     Route::post('/admin/user/changeaccess',         [AdminController::class, 'changeAccess'])->name('admin.user.changeaccess');    
     Route::post('/menu',                            [AdminController::class, 'addMenu'])->name('menu.add');

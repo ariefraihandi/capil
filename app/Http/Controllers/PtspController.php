@@ -168,4 +168,78 @@ class PtspController extends Controller
         }
     }
 
+    public function permohonanDelete(Request $request)
+    {
+        $id = $request->query('id'); // Get the 'id' from the query string
+    
+        // Start a database transaction
+        DB::beginTransaction();
+    
+        try {
+            // Find the PemohonUbahStatus by ID
+            $ubahStatus = PemohonUbahStatus::findOrFail($id);  // Throws ModelNotFoundException if not found
+            
+            // Find the associated PemohonInformasi by id_pemohon
+            $pemohon = PemohonInformasi::findOrFail($ubahStatus->id_pemohon);
+    
+            // Try to find SignsUbahStatus using the id_sign from $ubahStatus
+            $sign = SignsUbahStatus::find($ubahStatus->id_sign);    
+    
+            if ($sign) {
+                $sign->delete();  // Delete the associated sign entry
+            }
+    
+            // Extract the filename from the url_document field
+            $file_name = basename($ubahStatus->url_document); // e.g., '1748974654-Manual Book Portal By Arief.pdf'
+    
+            // Construct the full path to the file
+            $file_path = public_path('documents/' . $file_name);
+    
+            // Check if the file exists and delete it
+            if (File::exists($file_path)) {
+                File::delete($file_path);  // Delete the file
+            }
+    
+            // After successful file deletion, delete the PemohonInformasi and PemohonUbahStatus entries
+            $pemohon->delete();
+            $ubahStatus->delete();
+    
+            // Commit the transaction to finalize all changes
+            DB::commit();
+    
+            // Return success response after deleting the records
+            return redirect()->back()->with([
+                'response' => [
+                    'success' => true,
+                    'title' => 'Success',
+                    'message' => 'Permohonan berhasil dihapus!',
+                ]
+            ]);
+            
+        } catch (ModelNotFoundException $e) {
+            // Rollback the transaction if the record is not found
+            DB::rollBack();
+    
+            // Return a custom error message if any model is not found
+            return redirect()->back()->with([
+                'response' => [
+                    'success' => false,
+                    'title' => 'Error',
+                    'message' => 'Permohonan tidak ditemukan.',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            // Rollback the transaction if any other error occurs
+            DB::rollBack();
+    
+            // Return a general error message
+            return redirect()->back()->with([
+                'response' => [
+                    'success' => false,
+                    'title' => 'Error',
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+                ]
+            ]);
+        }
+    }
 }

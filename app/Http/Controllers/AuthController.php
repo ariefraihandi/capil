@@ -56,7 +56,7 @@ class AuthController extends Controller
     
             if ($roleName === 'dukcapil') {
                 // Jika role adalah DUKCAPIL, arahkan ke route khusus
-                return redirect()->route('aplikasi.siramasakan')->with('response', [
+                return redirect()->route('admin.permohonan')->with('response', [
                     'success' => true,
                     'title' => 'Berhasil',
                     'message' => 'Anda berhasil login sebagai DUKCAPIL.',
@@ -64,7 +64,7 @@ class AuthController extends Controller
             }
     
             // Ambil URL tujuan dari sesi atau default ke halaman profil
-            $intendedUrl = Session::get('url.intended', route('aplikasi.siramasakan'));
+            $intendedUrl = Session::get('url.intended', route('admin.permohonan'));
     
             // Bersihkan URL tujuan dari sesi
             Session::forget('url.intended');
