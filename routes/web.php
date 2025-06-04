@@ -121,7 +121,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     // Route::get('/getdata/menu',                     [AdminController::class, 'getDataMenu'])->name('menu.getData');
     // Route::get('/getdata/submenu',                  [AdminController::class, 'getDatasubMenu'])->name('getDatasubMenu');
     // Route::get('/getdata/childmenu',                [AdminController::class, 'getDataChildMenu'])->name('getDataChildMenu');
-    // Route::get('/getdata/rolelist',                 [AdminController::class, 'getDataRoleList'])->name('roleList.getData');
+    Route::get('/getdata/rolelist',                 [AdminController::class, 'getDataRoleList'])->name('roleList.getData');
     // Route::get('/getdata/user',                     [AdminController::class, 'userGetData'])->name('user.getData');
     // Route::get('/getdata/pegawai',                  [KepegawaianController::class, 'pegawaiGetData'])->name('pegawai.getData');
     // Route::get('/getdata/cutisisa',                 [CutiController::class, 'sisaCutigetData'])->name('cutis.getData');
